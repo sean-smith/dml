@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name             = 'dml',
-    version          = '0.0.6.0',
+    version          = '0.0.8.0',
     packages         = ['dml',],
     install_requires = ['pymongo',],
     license          = 'MIT License',

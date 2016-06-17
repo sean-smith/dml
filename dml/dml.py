@@ -6,10 +6,11 @@
 ##   Mechanics platform components.
 ##
 ##   Web:     datamechanics.org
-##   Version: 0.0.6.0
+##   Version: 0.0.8.0
 ##
 ##
 
+import sys
 import json
 import pymongo
 
@@ -86,5 +87,15 @@ pymongo.database.Database.dropTemp = dropTemporary
 pymongo.database.Database.dropPermanent = dropPermanent
 pymongo.database.Database.dropPerm = dropPermanent
 pymongo.database.Database.record = record
+
+"""
+Process the command line options supplied to the script loading
+this module.
+"""
+class Options():
+    def __init__(self, arguments):
+        self.trial = ('--trial' in arguments)
+
+options = Options(sys.argv[1:])
 
 ##eof
