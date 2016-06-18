@@ -6,12 +6,12 @@
 ##   Mechanics platform components.
 ##
 ##   Web:     datamechanics.org
-##   Version: 0.0.10.0
+##   Version: 0.0.11.0
 ##
 ##
 
-import sys
-import os.path
+import sys     # To parse command line arguments.
+import os.path # To check if a file exists.
 import json
 import pymongo
 
@@ -42,7 +42,7 @@ options = parameters # Public synonym.
 
 """
 We check that the environment provides an appropriate configuration file and
-an appropriate credentials file.
+an appropriate authentication credentials file for third-party services.
 """
 pathToConfig = "../config.json"
 if not os.path.isfile(pathToConfig):
@@ -61,6 +61,7 @@ if not os.path.isfile(pathToAuth):
         + "'. All scripts must be located within an immediate"\
         + "subdirectory of the platform instance root directory."\
     )
+auth = json.loads(open(pathToAuth).read())
 
 """
 Extend the PyMongo database.Database class with customized

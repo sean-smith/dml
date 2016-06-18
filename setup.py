@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name             = 'dml',
-    version          = '0.0.10.0',
+    version          = '0.0.11.0',
     packages         = ['dml',],
-    install_requires = ['json','pymongo',],
+    install_requires = ['pymongo',],
     license          = 'MIT License',
 	url              = 'http://datamechanics.org',
 	author           = 'A. Lapets',

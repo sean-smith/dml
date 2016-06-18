@@ -4,6 +4,6 @@ from dml.dml import pymongo
 
 # Check command line arguments and expose them when the
 # module is loaded.
-from dml.dml import options
+from dml.dml import options, auth
 
 ##eof
