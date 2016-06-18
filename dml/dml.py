@@ -6,7 +6,7 @@
 ##   Mechanics platform components.
 ##
 ##   Web:     datamechanics.org
-##   Version: 0.0.9.0
+##   Version: 0.0.10.0
 ##
 ##
 

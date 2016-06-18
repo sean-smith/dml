@@ -1,10 +1,10 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name             = 'dml',
-    version          = '0.0.9.0',
+    version          = '0.0.10.0',
     packages         = ['dml',],
-    install_requires = ['pymongo',],
+    install_requires = ['json','pymongo',],
     license          = 'MIT License',
 	url              = 'http://datamechanics.org',
 	author           = 'A. Lapets',
