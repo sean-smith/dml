@@ -49,7 +49,7 @@ if not os.path.isfile(pathToConfig):
     raise EnvironmentError(\
         "No valid configuration file found at '"\
         + pathToConfig\
-        + "'. All scripts must be located within an immediate"\
+        + "'. All scripts must be located within an immediate "\
         + "subdirectory of the platform instance root directory."\
     )
 
@@ -58,7 +58,7 @@ if not os.path.isfile(pathToAuth):
     raise EnvironmentError(\
         "No valid credentials file found at '"\
         + pathToAuth\
-        + "'. All scripts must be located within an immediate"\
+        + "'. All scripts must be located within an immediate "\
         + "subdirectory of the platform instance root directory."\
     )
 auth = json.loads(open(pathToAuth).read())
