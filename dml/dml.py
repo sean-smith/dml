@@ -6,17 +6,60 @@
 ##   Mechanics platform components.
 ##
 ##   Web:     datamechanics.org
-##   Version: 0.0.11.0
+##   Version: 0.0.12.0
 ##
 ##
 
 import sys     # To parse command line arguments.
 import os.path # To check if a file exists.
+import types
 import json
 import pymongo
 
 ###############################################################################
 ##
+
+"""
+An interface error occurs if a user of the library tries defining an algorithm
+class without providing definitions for the required methods.
+"""
+class InterfaceError(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return repr(self.value)
+
+"""
+A metaclass for creating contributor-authored (static) classes for platform
+algorithms, and a corresponding base class that uses that metaclass.
+"""
+class MetaAlgorithm(type):
+    def __new__(cls, clsname, bases, dct):
+        methods = {name:val for name, val in dct.items()}
+        if clsname != 'Algorithm':
+            if 'contributor' not in methods or type(methods['contributor']) != str:
+                raise InterfaceError("The class definition for " + clsname + " does not identify a contributor.")
+
+            if 'reads' not in methods or type(methods['reads']) != list:
+                raise InterfaceError("The class definition for " + clsname + " does not list the data sets it reads.")
+            reads_types = list({type(x) for x in methods['reads']})
+            if len(reads_types) > 0 and (len(reads_types) != 1 or reads_types[0] != str):
+                raise InterfaceError("The class definition for " + clsname + " has a non-name in its list of data sets it reads.")
+
+            if 'writes' not in methods or type(methods['writes']) != list:
+                raise InterfaceError("The class definition for " + clsname + " does not list the data sets it writes.")
+            writes_types = list({type(x) for x in methods['writes']})
+            if len(writes_types) > 0 and (len(writes_types) != 1 or writes_types[0] != str):
+                raise InterfaceError("The class definition for " + clsname + " has a non-name in its list of data sets it writes.")
+
+            if 'execute' not in methods or isinstance(methods['execute'], types.FunctionType):
+                raise InterfaceError("The class definition for " + clsname + " does not define a static 'execute' method.")
+            if 'provenance' not in methods or isinstance(methods['execute'], types.FunctionType):
+                raise InterfaceError("The class definition for " + clsname + " does not define a static 'provenance' method.")
+        return super(MetaAlgorithm, cls).__new__(cls, clsname, bases, dict(dct.items()))
+
+class Algorithm(metaclass=MetaAlgorithm):
+    __dml__ = True
 
 """
 An environment error occurs if a user of the library tries running a script
