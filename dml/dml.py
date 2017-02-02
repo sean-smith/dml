@@ -6,7 +6,7 @@
 ##   Mechanics platform components.
 ##
 ##   Web:     datamechanics.org
-##   Version: 0.0.13.0
+##   Version: 0.0.15.0
 ##
 ##
 
@@ -132,26 +132,26 @@ def createTemporary(self, name):
     Wrapper for creating a temporary repository collection
     that can be removed after a particular computation is complete.
     """
-    return customElevatedCommand(self, self.system_js.createTemp, name)
+    return customElevatedCommand(self, self.system_js.createCollection, name)
 
 def createPermanent(self, name):
     """
     Wrapper for creating a repository collection that should remain
     after it is derived.
     """
-    return customElevatedCommand(self, self.system_js.createPerm, name)
+    return customElevatedCommand(self, self.system_js.createCollection, name)
 
 def dropTemporary(self, name):
     """
     Wrapper for removing a temporary repository collection.
     """
-    return customElevatedCommand(self, self.system_js.dropTemp, name)
+    return customElevatedCommand(self, self.system_js.dropCollection, name)
 
 def dropPermanent(self, name):
     """
     Wrapper for removing a permanent repository collection.
     """
-    return customElevatedCommand(self, self.system_js.dropPerm, name)
+    return customElevatedCommand(self, self.system_js.dropCollection, name)
 
 def record(self, raw):
     """
@@ -161,6 +161,12 @@ def record(self, raw):
     """
     raw = raw.replace('"$"', '"@"')
     return customElevatedCommand(self, self.system_js.record, raw, 'record')
+
+def metadata(self, obj = None):
+    if obj is None:
+        return self.database[self.name + '.metadata'].find_one()
+    else:
+        return self.database[self.name + '.metadata'].insert_one(obj)
 
 """
 We extend the pymongo Database class with the additional methods
@@ -175,5 +181,9 @@ pymongo.database.Database.dropTemp = dropTemporary
 pymongo.database.Database.dropPermanent = dropPermanent
 pymongo.database.Database.dropPerm = dropPermanent
 pymongo.database.Database.record = record
+
+pymongo.database.Database.createCollection = createPermanent
+pymongo.database.Database.dropCollection = dropPermanent
+pymongo.collection.Collection.metadata = metadata
 
 ##eof

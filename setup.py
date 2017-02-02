@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name             = 'dml',
-    version          = '0.0.13.0',
+    version          = '0.0.15.0',
     packages         = ['dml',],
     install_requires = ['pymongo',],
     license          = 'MIT License',
